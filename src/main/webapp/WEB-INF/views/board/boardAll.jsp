@@ -24,7 +24,7 @@ td {
 	padding: 10px;
 }
 .space {
-  width: 400px;
+  width: 800;
   display: inline-block;
 }
 </style>
@@ -38,13 +38,15 @@ td {
 		<table align="center">
 		<div style="text-align:right; width: 89.5%;"> 
 			<button onclick="location.href='/board/userAdd'">회원 가입</button>
-			<div class = "space"> 게시글을 작성하려면 회원 가입이 필요합니다.이런 문구가 들어가면 될 듯</div><div class="space"></div>
+			<button onclick="location.href='/board/loginView'">로그인</button>
+			<div class = "space"> 게시글을 확인하려면 로그인하세요.</div>
 			<button onclick="location.href='/board/insert'">게시판 등록</button>
+			
 		</div>
 		<table align="center">
 		<div style="text-align:right; width: 89.5%;">
 			<input type="button" value="회원 가입" onclick="location.href='/board/userAdd'">
-			<div class = "space">게시글을 작성하려면 회원 가입이 필요합니다. 이런 문구가 들어가면 될 듯</div> <div class="space"></div>
+			<div class = "space">게시글을 작성하려면 회원 가입이 필요합니다. 이런 문구가 들어가면 될 듯</div> 
 			<input type="button" value="게시물 등록" onclick="location.href='/board/insert'">
 			<br/><br/>
 		</div>

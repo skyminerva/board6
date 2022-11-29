@@ -7,15 +7,6 @@
 	<head>
 	 	<title>회원가입</title>
 	</head>
-	<style>
-	 .msg {
-      height: 30px;
-      text-align:center;
-      font-size:16px;
-      color:red;
-      margin-bottom: 20px;
-        }
-	</style>
 	<body>
 	
 		<div id="root">
@@ -77,16 +68,7 @@
 						</tbody>			
 					</table>
 				</form>
-			  <script>
-      				 function formCheck(form) {
-        			    let msg ='';
-        			 if(form.id.value.length<3) {
-         		       setMessage('id의 길이는 3이상이어야 합니다.', form.id);
-               		  return false;
-          		     }
-     			      return true;
-    			     }
-  			  </script>
+
 			</section>
 			<hr />
 		</div>

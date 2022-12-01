@@ -25,4 +25,11 @@
 	  now());
 	</insert>
 
+	<select id="userSelect" parameterType="string" resultType="com.board.vo.UserVo">
+	SELECT	
+		id
+		, pwd
+	FROM userinfo
+	WHERE id = #{id}	
+	</select>
 </mapper>

@@ -4,7 +4,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import com.board.vo.BoardVo;
 
 @Controller
 @RequestMapping("/board/*")
-public class BoardController {
+public class BoardController<httpHttpServletRequest> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
@@ -52,9 +53,14 @@ public class BoardController {
 	
 	// 게시판 전체 조회
 	@RequestMapping(value = "/boardAll", method = RequestMethod.GET)
-	public String list(Model model) throws Exception{
+	public String list(Model model, HttpServletRequest request) throws Exception{
 		logger.info("boardAll");
-		
+		// 로그인체크 세션 정보 유무에 따라서
+		if(!loginCheck(request)) {
+			// 세션이 없으면 로그인 화면을 보여준다
+			return "redirect:/board/loginView";
+		}
+			
 		// 서비스 처리
 		List<BoardVo> result =  boardService.selectBoardAll();
 		
@@ -65,6 +71,22 @@ public class BoardController {
 		return "board/boardAll";
 		
 	}
+	
+	// 로그인 체크
+	private boolean loginCheck(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		// 세션을 가지고 온다
+		HttpSession session = request.getSession();
+		session.getAttribute("id");
+		// 세션을 getAttribute id 값이 존재하면 true, 없으면 false  
+		if(session.getAttribute("id") != null) {
+			return true;
+		}
+		
+		
+		return false;
+	}
+	
 	
 	// 게시판 조회
 	@RequestMapping(value = "/select", method = RequestMethod.GET)
@@ -77,7 +99,7 @@ public class BoardController {
 		// 보여줄 jsp 화면
 		return "board/select";
 	}
-	
+
 	// 게시판 글 작성 화면
 	@RequestMapping(value = "/board/insert", method = RequestMethod.GET)
 	public void insertView() throws Exception{

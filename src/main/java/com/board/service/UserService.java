@@ -23,5 +23,10 @@ public class UserService {
 		userDAO.userAdd(userVo);
 		
 	}
-
+	
+	public UserVo userSelect(String id) {
+		
+		// dao 처리
+		return userDAO.userSelect(id);
+	}
 }

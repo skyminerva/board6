@@ -12,9 +12,15 @@ public class UserDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	// 회원가입 
 	public void userAdd(UserVo userVo) {
 		sqlSession.insert("userMapper.userAdd", userVo);
 	}
 	
+	// 회원선택 (로그인)
+	public UserVo userSelect(String id) {
+		
+		return sqlSession.selectOne("userMapper.userSelect", id);
+	}
 
 }

@@ -25,6 +25,21 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
+	<!-- interceptor beans 등록하기 -->
+	<beans:bean id = "loginInterceptor" class = "com.board.interceptor.LoginInterceptor">
+	</beans:bean>
+	<!-- interceptor 설정하기 -->
+	<interceptors>
+		<interceptor>
+		<!-- interceptor를 사용할 곳 지정해주는 것이다. -->
+			<mapping path="/board/boardAll"/>
+			<mapping path="/board/insert"/>
+			<mapping path="/board/select"/>
+			<mapping path="/board/updateView"/>
+			<beans:ref bean = "loginInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
 	<context:component-scan base-package="com.board.controller"/>
 
 </beans:beans>

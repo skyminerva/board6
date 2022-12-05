@@ -56,10 +56,11 @@ public class BoardController<httpHttpServletRequest> {
 	public String list(Model model, HttpServletRequest request) throws Exception{
 		logger.info("boardAll");
 		// 로그인체크 세션 정보 유무에 따라서
-		if(!loginCheck(request)) {
-			// 세션이 없으면 로그인 화면을 보여준다
-			return "redirect:/board/loginView";
-		}
+//		if(loginCheck(request) == false) {
+//		
+//			// 세션이 없으면 로그인 화면을 보여준다. 세션이 타임아웃으로 끝나도 로그인 화면을 보여준다.
+//			return "redirect:/board/loginView";
+//		}
 			
 		// 서비스 처리
 		List<BoardVo> result =  boardService.selectBoardAll();
@@ -73,19 +74,19 @@ public class BoardController<httpHttpServletRequest> {
 	}
 	
 	// 로그인 체크
-	private boolean loginCheck(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		// 세션을 가지고 온다
-		HttpSession session = request.getSession();
-		session.getAttribute("id");
-		// 세션을 getAttribute id 값이 존재하면 true, 없으면 false  
-		if(session.getAttribute("id") != null) {
-			return true;
-		}
-		
-		
-		return false;
-	}
+//	private boolean loginCheck(HttpServletRequest request) {
+//		// TODO Auto-generated method stub
+//		// 세션을 가지고 온다
+//		HttpSession session = request.getSession();
+//		session.getAttribute("id");
+//		// 세션을 getAttribute id 값이 존재하면 true, 없으면 false  
+//		if(session.getAttribute("id") != null) {
+//			return true;
+//		}
+//		
+//		
+//		return false;
+//	}
 	
 	
 	// 게시판 조회

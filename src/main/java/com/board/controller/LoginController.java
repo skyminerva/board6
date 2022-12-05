@@ -35,13 +35,16 @@ public class LoginController {
 //			return "board/loginView";
 //			
 //		}
+		// logincheck를 안하니 여기에서 서비스처리 id로 유저셀렉(로그인)
 		UserVo user = userService.userSelect(id);
 		
+		// user 객체가 null이 아니면 select된 id가 존재하므로 로그인 성공 
 		if (user != null) {
 			// setAttribute의 "user"는 interceptor의 getAttribute와 맞춰주어야 한다.
 			session.setAttribute("user", user);
 			return "redirect:/board/boardAll";
-			
+		
+		// 서비스 처리(user 객체가 null이면 select id가 없으므로 로그인 실패임)
 		} else {
 			return "board/loginView";
 		}

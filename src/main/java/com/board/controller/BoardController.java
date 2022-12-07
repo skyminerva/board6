@@ -55,6 +55,11 @@ public class BoardController<httpHttpServletRequest> {
 	@RequestMapping(value = "/boardAll", method = RequestMethod.GET)
 	public String list(Model model, HttpServletRequest request) throws Exception{
 		logger.info("boardAll");
+		
+		// getSession
+		HttpSession session = request.getSession();
+		// user 객체 get
+		session.getAttribute("user");
 		// 로그인체크 세션 정보 유무에 따라서
 //		if(loginCheck(request) == false) {
 //		
@@ -67,7 +72,7 @@ public class BoardController<httpHttpServletRequest> {
 		
 		// model 에 add
 		model.addAttribute("boardAll",result);
-		
+	
 		// 보여줄 jsp 화면
 		return "board/boardAll";
 		

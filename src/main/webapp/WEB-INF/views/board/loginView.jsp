@@ -42,6 +42,7 @@
                      setMessage('password를 입력해주세요.', frm.pwd);
                      return false;
                  }
+                
                  return true;
             }
      		<!-- 폼체크해서 if 문에 id, pwd에 따라서 메세지 선택 -->

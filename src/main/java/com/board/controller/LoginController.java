@@ -1,6 +1,5 @@
 package com.board.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.board.dao.UserDAO;
 import com.board.service.UserService;
 import com.board.vo.UserVo;
 
@@ -27,7 +25,7 @@ public class LoginController {
 	
 	// HttpServletRequest는 interceptor에 있으므로  HttpSession을 사용해서 set만 해주면 된다.
 	@RequestMapping(value = "/board/loginView", method = RequestMethod.POST)
-	public String login(String id, HttpSession session) {
+	public String login(String id, String pwd, HttpSession session) {
 //	public String login(String id, String pwd, HttpServletRequest request) {
 //		
 //		if (loginCheck(id, pwd) == false) {
@@ -38,8 +36,8 @@ public class LoginController {
 		// logincheck를 안하니 여기에서 서비스처리 id로 유저셀렉(로그인)
 		UserVo user = userService.userSelect(id);
 		
-		// user 객체가 null이 아니면 select된 id가 존재하므로 로그인 성공 
-		if (user != null) {
+		// user 객체가 null이 아니면 select된 id가 존재하므로 로그인 성공 >> pwd equals 확인 후 로그인 처리
+		if (user != null && user.getPwd().equals(pwd)) {
 			// setAttribute의 "user"는 interceptor의 getAttribute와 맞춰주어야 한다.
 			session.setAttribute("user", user);
 			return "redirect:/board/boardAll";
@@ -71,5 +69,14 @@ public class LoginController {
 //	    
 //	    return false;
 //	}
-
+	
+	// 로그아웃 >> 로그아웃 바로 로그인 화면으로 가도록 만듬
+	@RequestMapping(value ="/board/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		
+		// 세션 바로 종료
+		session.invalidate();
+		
+		return "board/loginView"; 
+	}
 }

@@ -21,12 +21,14 @@
 			<hr />
 			
 			<section id="container">
-				<form role="form" method="post" action="/board/insert">
+				<form action="/board/insert" method="post" onsubmit="return formCheck(this);">
+				     <div id="msg">
+					</div>
 					<table>
 						<tbody>
 							<tr>
 								<td>
-									<label for="title">제목</label><input type="text" id="title" name="title" />
+									<label for="title">제목</label><input type="text" id="title" name="title" value=""/>
 								</td>
 							</tr>	
 							<tr>
@@ -36,15 +38,44 @@
 							</tr>
 							<tr>
 								<td>
-									<label for="name">작성자</label><input type="text" id="name" name="name" />
+									<label for="name">작성자</label><input type="text" id="name" name="name" value=""/>
 								</td>
 							<tr>
 								<td>						
 									<button type="submit">작성</button>
+									<button onclick ="location.href='/board/boardAll'">목록</button>
+									<c:if test="${sessionScope.user.id != null}">
+										<button onclick ="location.href='/board/logout'">로그아웃</button>   ${sessionScope.user.id} ${sessionScope.user.name}
+									</c:if>
 								</td>
 							</tr>			
 						</tbody>			
 					</table>
+					<script>
+       			     function formCheck(frm) {
+        			         let msg ='';
+     
+        			         if(frm.title.value.length < 2) {
+           			          setMessage('제목은 2자리 이상을 입력해주세요.', frm.title);
+       			            return false;
+        			         }
+     
+       			          if(frm.name.value.length==0) {
+       			              setMessage('이름을 입력해주세요.', frm.name);
+       			              return false;
+      			           }
+                
+			                 return true;
+			            }
+    			 		<!-- 폼체크해서 if 문에 따라서 메세지 선택 -->
+   			         function setMessage(msg, element){
+     			            document.getElementById("msg").innerHTML = ` ${'${msg}'}`;
+     
+    			             if(element) {
+     			                element.select();
+     			            }
+      			      }
+      			  </script>
 				</form>
 			</section>
 			<hr />

@@ -80,9 +80,16 @@
 						</tbody>			
 					</table>
 					<div>
-					<button type="submit" class="update_btn">수정</button>
-					<button type="submit" class="delete_btn">삭제</button>
+					<!-- user.name과 select.name 이 같을 경우에만 수정 삭제 보여주기 -->
+					<c:if test="${sessionScope.user.name == select.name}">
+						<button type="submit" class="update_btn">수정</button>
+						<button type="submit" class="delete_btn">삭제</button>
+					</c:if>
 					<button type="submit" class="list_btn">목록</button>	
+					<!-- null이 아니므로 로그아웃 버튼과 id 이름 안나오는 것 확인 -->
+					<c:if test="${sessionScope.user.id == null}">
+						<button onclick="location.href='/board/logout'">로그아웃</button>${sessionScope.user.id} ${sessionScope.user.name}
+					</c:if>
 				</div>
 			</section>
 			<hr />

@@ -13,6 +13,10 @@
 				event.preventDefault();
 				location.href = "/board/boardAll";
 			})
+			$(".logout_btn").on("click", function(){
+				event.preventDefault();
+				location.href = "/board/loginView";
+			})
 		})
 	
 	</script>
@@ -60,6 +64,7 @@
 					<div>
 						<button type="submit" class="update_btn">저장</button>
 						<button type="submit" class="cancel_btn">취소</button>
+						<button type="submit" class="logout_btn">로그아웃</button>
 					</div>
 				</form>
 			</section>

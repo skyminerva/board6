@@ -16,13 +16,13 @@
 			<tr>
 				<td>
 					<label>ID</label></br>
-					<input type="text" name="id" value="" placeholder="id 입력" >
+					<input type="text" name="id" value="${cookie.id.value}" placeholder="id 입력" >
    			    </td>
     	    </tr>
     	    <tr>
      		    <td>
      		    	<label>PASSWORD</label></br>
-			        <input type="password" name="pwd" value = "" placeholder="비밀번호">
+			        <input type="password" name="pwd" value = "${cookie.pwd.value}" placeholder="비밀번호">
 				</td>
 			</tr>
         <td>

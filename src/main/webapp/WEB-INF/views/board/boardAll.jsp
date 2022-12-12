@@ -39,10 +39,14 @@ td {
 		<div style="text-align:right; width: 89.5%;"> 
 			<button onclick="location.href='/board/userAdd'">회원 가입</button>
 			<button onclick="location.href='/board/loginView'">로그인</button>
+			<div>
+         	   <label><input type="checkbox" name="login" > 로그인 유지</label> 
+         	   <label><input type="checkbox" name="autoLogin" > 자동로그인</label>
+        	  </div>
 			<div class = "space"> 게시글을 확인하려면 로그인하세요.</div>
 			<button onclick="location.href='/board/insert'">게시판 등록</button>
 			<!-- 세션에 user 객체가 있으므로 null이 아니므로 로그아웃 버튼과 id name 나오는 것 확인 -->
-			<c:if test="${sessionScope.user.id != null}">
+			<c:if test="${sessionScope.user.id != null || cookie.id.value != null}">
 				<button onclick="location.href='/board/logout'">로그아웃</button>${sessionScope.user.id} ${sessionScope.user.name}
 				<h2>${sessionScope.user.id}</h2>
 				<h2>${sessionScope.user.name}</h2>

@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,8 @@ import com.board.vo.UserVo;
 
 @Controller
 public class LoginController {
+	
+	private final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@Autowired
 	private UserService userService;
@@ -50,7 +54,7 @@ public class LoginController {
 			Cookie cookie = new Cookie("id", id);
 			// 쿠키 종료 시간 설정
 			cookie.setMaxAge(10*60);
-			
+            logger.debug("**************cookie****************** : {}", cookie);
 			// 쿠키 추가
 			response.addCookie(cookie);
 //			
@@ -100,18 +104,22 @@ public class LoginController {
 		session.invalidate();
 		
 		// 쿠키 종료 하기
-		Cookie[] cookie = request.getCookies();
+//		Cookie[] cookie = request.getCookies();
 		// 쿠키에 값이 있으면
-		if (cookie != null) {
+//		if (cookie != null) {
 			
-			for (int i = 0; i < cookie.length; i++) {
-			// 쿠키 유효시간0으로 종료
-			cookie[i].setMaxAge(0); 
-			// 쿠키 추가하여 만료
-			response.addCookie(cookie[i]); 
-			}
-		}
-		
+//			logger.debug("******************cookie********************* :{}", cookie);
+//			for (int i = 0; i < cookie.length; i++) {
+//			// 쿠키 유효시간0으로 종료
+//			cookie[i].setMaxAge(0); 
+//			// 쿠키 추가하여 만료
+//			response.addCookie(cookie[i]); 
+//			}
+//			logger.debug("******************cookie********************* :{}", cookie);
+//		}
+		Cookie cookie = new Cookie("id", null);
+		cookie.setMaxAge(0); 
+		response.addCookie(cookie);
 		return "board/loginView"; 
 	}
 }

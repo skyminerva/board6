@@ -5,11 +5,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 // HandlerInterceptor와 HandlerInterceptorAdapter 사용법은 동일하다.
 // HandlerInterceptor는 implements로 HandlerInterceptorAdapter은 extends 해주면 된다.
 public class LoginInterceptor extends HandlerInterceptorAdapter{
+	
+	private final Logger logger =LoggerFactory.getLogger(LoginInterceptor.class);
 	
 	// preHandle은 컨트롤러보다 먼저 수행된다.
 	@Override
@@ -27,6 +31,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		if (obj == null) {
 		
 		    Cookie[] cookie=request.getCookies(); 
+            logger.debug("**************cookie****************** : {}", cookie);
 		    // 쿠기가 있으면
 		    if(cookie!=null){
 		    	// 향상된 for문 
@@ -35,6 +40,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		            String name = cookies.getName();
 		            // 쿠키 값 가져오기
 		            String value = cookies.getValue(); 
+
 		            if (name.equals("id")) {
 		                return true;
 		            } else {

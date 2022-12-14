@@ -27,6 +27,7 @@ td {
   width: 800;
   display: inline-block;
 }
+
 </style>
 
 </head>
@@ -35,21 +36,29 @@ td {
 		<h1>내맘대로 게시판</h1>
 		<br/><br/><br/>
 		
+		<div id="menu" style="text-align:left;">
+		<ul>
+		    <a href="/board/">Home</a>
+		    <a href="/board/boardAll">BoardAll</a>
+		    <a href="<c:url value='/board/freeBoard'/>">자유게시판</a>
+		    <a href="<c:url value='/board/java'/>">Java</a>
+		    <a href="<c:url value='/board/sql'/>">Sql</a>
+		    <a href="<c:url value='/board/review'/>">복습</a>
+		</ul>
+		
+		</div>
 		<table align="center">
 		<div style="text-align:right; width: 89.5%;"> 
+			<button onclick="location.href='/board/'">홈</button>
 			<button onclick="location.href='/board/userAdd'">회원 가입</button>
 			<button onclick="location.href='/board/loginView'">로그인</button>
-			<div>
-         	   <label><input type="checkbox" name="login" > 로그인 유지</label> 
-         	   <label><input type="checkbox" name="autoLogin" > 자동로그인</label>
-        	  </div>
-			<div class = "space"> 게시글을 확인하려면 로그인하세요.</div>
 			<button onclick="location.href='/board/insert'">게시판 등록</button>
 			<!-- 세션에 user 객체가 있으므로 null이 아니므로 로그아웃 버튼과 id name 나오는 것 확인 -->
-			<c:if test="${sessionScope.user.id != null || cookie.id.value != null}">
+			<!-- 쿠키로 자동로그인 시에는 세션스코프를 이용한 유저 객체는 가지고 오지 못한다. -->
+			<c:if test="${cookie.id.value != null}">
 				<button onclick="location.href='/board/logout'">로그아웃</button>${sessionScope.user.id} ${sessionScope.user.name}
-				<h2>${sessionScope.user.id}</h2>
-				<h2>${sessionScope.user.name}</h2>
+				<h2>${cookie.id.name}</h2>
+				<h2>${cookie.id.value}</h2>
 				<input type="text" name="id" id ="id" value= "${sessionScope.user.id}">
 				<input type="text" name="name" id ="name" value= "${sessionScope.user.name}">
 			</c:if>

@@ -31,7 +31,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		if (obj == null) {
 		
 		    Cookie[] cookie=request.getCookies(); 
-            logger.debug("**************cookie****************** : {}", cookie);
 		    // 쿠기가 있으면
 		    if(cookie!=null){
 		    	// 향상된 for문 

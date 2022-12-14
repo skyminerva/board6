@@ -16,19 +16,23 @@
 			<tr>
 				<td>
 					<label>ID</label></br>
-					<input type="text" name="id" value="${cookie.id.value}" placeholder="id 입력" >
+					<input type="text" name="id" value="" placeholder="id 입력" >
    			    </td>
     	    </tr>
     	    <tr>
      		    <td>
      		    	<label>PASSWORD</label></br>
-			        <input type="password" name="pwd" value = "${cookie.pwd.value}" placeholder="비밀번호">
+			        <input type="password" name="pwd" value = "" placeholder="비밀번호">
 				</td>
 			</tr>
         <td>
         <button>로그인</button>
         </td>
         </table>
+        	<div>
+         	   <label><input type="checkbox" name="keepLogin" ${empty cookie.id.value ? "":checked}> 로그인 유지</label> 
+         	   <label><input type="checkbox" name="autoLogin" ${empty cookie.id.value ? "":checked}> 자동로그인</label>
+            </div>
         <script>
             function formCheck(frm) {
                  let msg ='';

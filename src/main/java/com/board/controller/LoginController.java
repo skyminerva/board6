@@ -32,7 +32,7 @@ public class LoginController {
 	
 	// HttpServletRequest는 interceptor에 있으므로  HttpSession을 사용해서 set만 해주면 된다.
 	@RequestMapping(value = "/board/loginView", method = RequestMethod.POST)
-	public String login(String id, String pwd, HttpSession session, HttpServletResponse response) {
+	public String login(String id, String pwd, boolean keepLogin ,boolean autoLogin ,HttpSession session, HttpServletResponse response) {
 //	public String login(String id, String pwd, HttpServletRequest request) {
 //		
 //		if (loginCheck(id, pwd) == false) {
@@ -42,7 +42,7 @@ public class LoginController {
 //		}
 		// logincheck를 안하니 여기에서 서비스처리 id로 유저셀렉(로그인)
 		UserVo user = userService.userSelect(id);
-		
+        logger.debug("**************user****************** : {}", user);
 		
 		// user 객체가 null이 아니면 select된 id가 존재하므로 로그인 성공 >> pwd equals 확인 후 로그인 처리
 		if (user != null && user.getPwd().equals(pwd)) {
@@ -50,14 +50,80 @@ public class LoginController {
 			// setAttribute의 "user"는 interceptor의 getAttribute와 맞춰주어야 한다.
 			session.setAttribute("user", user);
 			
-			// cookie 생성
-			Cookie cookie = new Cookie("id", id);
-			// 쿠키 종료 시간 설정
-			cookie.setMaxAge(10*60);
-            logger.debug("**************cookie****************** : {}", cookie);
-			// 쿠키 추가
-			response.addCookie(cookie);
-//			
+			// 쿠키로 로그인 유지와 자동 로그인
+			// 유지 및 자동 미체크시 쿠키 생성 안함
+			if(keepLogin != true && autoLogin != true) {
+				
+				// cookie 생성
+				Cookie cookie = new Cookie("id", null);
+				// 쿠키 종료 시간 설정
+				cookie.setMaxAge(0);
+				// 쿠키 추가
+				response.addCookie(cookie);
+			
+			// 로그인 유지 체크
+			} else if(keepLogin == true && autoLogin != true) {
+				// cookie 생성
+				Cookie cookie = new Cookie("id", id);
+				// 클라이언트가 종료가 되면 쿠키도 삭제. 쿠키 시간 설정 필요x
+				// 쿠키 추가
+				response.addCookie(cookie);
+				
+			// 자동로그인 체크 
+			} else if(keepLogin != true && autoLogin == true) {
+				// cookie 생성
+				Cookie cookie = new Cookie("id", id);
+				// 쿠키 종료 시간 설정
+				// 클라이언트와 서버가 종료되어도 설정한 시간만큼 쿠키 유지 
+				cookie.setMaxAge(20*60);
+				// 쿠키 추가
+				response.addCookie(cookie);
+				
+			// 유지 및 자동로그인 모두 체크 
+			} else {
+				// cookie 생성
+				Cookie cookie = new Cookie("id", id);
+				// 쿠키 종료 시간 설정
+				// 자동로그인이 유지되는 시간만큼만 유지되는 것이 맞을 듯
+				cookie.setMaxAge(20*60);
+				// 쿠키 추가
+				response.addCookie(cookie);
+			}
+					
+//			// 로그인유지
+//			if(loging == true) {
+//			// cookie 생성
+//			Cookie cookie = new Cookie("id", id);
+//			// 쿠키 종료 시간 설정(클라이언트가 종료될 때까지만 유지하고 싶으면 시간설정을 하지 않는다.)
+//			// cookie.setMaxAge(10*60);
+//			// 쿠키 추가
+//			response.addCookie(cookie);
+//			} else {
+//				// cookie 생성
+//				Cookie cookie = new Cookie("id", null);
+//				// 쿠키 종료 시간 설정
+//				cookie.setMaxAge(0);
+//				// 쿠키 추가
+//				response.addCookie(cookie);
+//			}
+			
+//			// 자동로그인
+//			if(autoLogin == true) {
+//			// cookie 생성
+//			Cookie cookie = new Cookie("id", id);
+//			// 쿠키 종료 시간 설정
+//			cookie.setMaxAge(20*60);
+//			// 쿠키 추가
+//			response.addCookie(cookie);
+//			} else {
+//				// cookie 생성
+//				Cookie cookie = new Cookie("id", null);
+//				// 쿠키 종료 시간 설정
+//				cookie.setMaxAge(0);
+//				// 쿠키 추가
+//				response.addCookie(cookie);
+//			}
+			
 //			Cookie userPwd = new Cookie("pwd", user.getPwd());
 //			
 //			userPwd.setMaxAge(60*60);

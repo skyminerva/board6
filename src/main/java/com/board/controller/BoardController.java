@@ -69,7 +69,7 @@ public class BoardController<httpHttpServletRequest> {
 			
 		// 서비스 처리
 		List<BoardVo> result =  boardService.selectBoardAll();
-		
+		logger.info("==============result=============== : {} ", result);
 		// model 에 add
 		model.addAttribute("boardAll",result);
 	
@@ -100,6 +100,8 @@ public class BoardController<httpHttpServletRequest> {
 		logger.info("select");
 		// 서비스 처리
 		BoardVo result = boardService.selectBoard(boardVo.getId());
+		
+		logger.debug("==============result=============== : {} ", result);
 		// model 에 add
 		model.addAttribute("select", result);
 		// 보여줄 jsp 화면

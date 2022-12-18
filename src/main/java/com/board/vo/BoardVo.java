@@ -8,7 +8,9 @@ public class BoardVo {
 	private String name;
 	private String title;
 	private String content;
+	private String division;
 	private Date regdate;
+	private Date up_date;
 	
 	public int getId() {
 		return id;
@@ -39,6 +41,23 @@ public class BoardVo {
 	}
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
+	}
+	public String getDivision() {
+		return division;
+	}
+	public void setDivision(String division) {
+		this.division = division;
+	}
+	public Date getUpdate() {
+		return up_date;
+	}
+	public void setUpdate(Date update) {
+		this.up_date = update;
+	}
+	@Override
+	public String toString() {
+		return "BoardVo [id=" + id + ", name=" + name + ", title=" + title + ", content=" + content + ", division="
+				+ division + ", regdate=" + regdate + ", up_date=" + up_date + "]";
 	}
 
 

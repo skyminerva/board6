@@ -50,7 +50,7 @@
 							</tr>
 							<tr>
 								<td>
-									<label for="id">게시판ID</label><input type="text" id="id" name="id" value="${update.id}" readonly="readonly"/>
+									<label for="id">게시판번호</label><input type="text" id="id" name="id" value="${update.id}" readonly="readonly"/>
 								</td>
 							</tr>
 							<tr>

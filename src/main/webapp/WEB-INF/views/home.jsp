@@ -21,7 +21,7 @@
 	
 		    <li><a href="<c:url value='/board/'/>">Home</a></li>
 		    <li><a href="<c:url value='/board/boardAll'/>">BoardAll</a></li>
-		    <li><a href="<c:url value='/board/java'/>">Java</a></li>
+		    <li><a href="<c:url value='/board/javaBoard'/>">Java</a></li>
 		    <li><a href="<c:url value='/board/sql'/>">Sql</a></li>
 		    <li><a href="<c:url value='/board/logout'/>">로그아웃</a></li>    
 		    <li><a href="<c:url value='/board/userAdd'/>">회원가입</a></li>

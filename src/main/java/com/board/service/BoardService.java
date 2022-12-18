@@ -38,9 +38,9 @@ public class BoardService {
 	}
 	
 	// 게시물 수정
-	public void update(BoardVo boardVo) throws Exception {
-
-		boardDAO.update(boardVo);
+	public void updateBoard(BoardVo boardVo) throws Exception {
+		
+		boardDAO.updateBoard(boardVo);
 	}
 
 	// 게시물 삭제

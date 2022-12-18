@@ -41,9 +41,9 @@ public class BoardDAO {
 	}
 	
 	// 게시물 수정
-	public void update(BoardVo boardVo) throws Exception {
+	public void updateBoard(BoardVo boardVo) throws Exception {
 		
-		sqlSession.update("boardMapper.update", boardVo);
+		sqlSession.update("boardMapper.updateBoard", boardVo);
 	}
 
 	// 게시물 삭제

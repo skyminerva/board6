@@ -59,7 +59,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		}
 		
 		// 세션 타임아웃 설정  게시판목록, 게시판 작성, 게시판 조회에서 타임아웃되는 것 확인.
-		session.setMaxInactiveInterval(30);
+		session.setMaxInactiveInterval(10*60);
 	
 		// obj가 null이 아닐 시는 로그인 성공이므로 true 리턴
 		// preHandle의 return은 컨트롤러 요청 uri로 이동하는 것의 여부를 뜻한다.

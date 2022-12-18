@@ -32,8 +32,12 @@
 	<interceptors>
 		<interceptor>
 		<!-- interceptor를 사용할 곳 지정해주는 것이다.
-			게시판 목록은 세션 제외하고 로그아웃 버튼 및 id name 확인
-			<mapping path="/board/boardAll"/> -->
+			게시판 목록은 세션 제외하고 로그아웃 버튼 및 id name 확인. 세션 쿠키가 없으면 로그인 화면으로 간다-->
+			<mapping path="/board/boardAll"/> 
+			<mapping path="/board/freeBoard"/>
+			<mapping path="/board/javaBoard"/>
+			<mapping path="/board/sqlBoard"/>
+			<mapping path="/board/reviewBoard"/>
 			<mapping path="/board/insert"/>
 			<mapping path="/board/select"/>
 			<mapping path="/board/updateView"/>

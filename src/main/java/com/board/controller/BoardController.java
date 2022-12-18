@@ -53,7 +53,7 @@ public class BoardController<httpHttpServletRequest> {
 	
 	// 게시판 전체 조회
 	@RequestMapping(value = "/boardAll", method = RequestMethod.GET)
-	public String list(Model model, HttpServletRequest request) throws Exception{
+	public String listAll(Model model, HttpServletRequest request) throws Exception{
 		logger.info("boardAll");
 		
 		// getSession
@@ -80,7 +80,6 @@ public class BoardController<httpHttpServletRequest> {
 	
 	// 로그인 체크
 //	private boolean loginCheck(HttpServletRequest request) {
-//		// TODO Auto-generated method stub
 //		// 세션을 가지고 온다
 //		HttpSession session = request.getSession();
 //		session.getAttribute("id");
@@ -134,8 +133,10 @@ public class BoardController<httpHttpServletRequest> {
 	@RequestMapping(value = "/updateView", method = RequestMethod.GET)
 	public String updateView(BoardVo boardVo, Model model) throws Exception{
 		logger.info("updateView");
+		
 		// 서비스 처리
 		BoardVo result =  boardService.selectBoard(boardVo.getId());
+		
 		// model에 add
 		model.addAttribute("update", result);
 		
@@ -144,11 +145,11 @@ public class BoardController<httpHttpServletRequest> {
 	
 	// 게시판 수정
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(BoardVo boardVo) throws Exception{
+	public String updateBoard(BoardVo boardVo) throws Exception{
 		logger.info("update");
 		
 		// 서비스 처리
-		boardService.update(boardVo);
+		boardService.updateBoard(boardVo);
 		
 		// 업데이트 확인 boardAll로 
 		return "redirect:/board/boardAll";

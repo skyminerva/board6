@@ -18,14 +18,17 @@
 	( #{name}, #{title}, #{content}, now());
 	</insert>
 	
+	<!-- 게시판 전체 조회 -->
 	<select id="selectBoardAll" resultType="com.board.vo.BoardVo">
 		SELECT  id
+			   , division
 			   , TITLE
 			   , name
 			   , REGDATE
 		FROM board
 	</select>
 	
+	<!-- 게시판 단건 조회 -->
 	<select id="selectBoard" parameterType="int" resultType="com.board.vo.BoardVo">
 		SELECT	id
 			  , TITLE
@@ -35,17 +38,137 @@
 		 FROM board
 		 WHERE id = #{id}
 	</select>
-		
-	<update id="update" parameterType="com.board.vo.BoardVo">
+	
+	<!-- 게시판 수정 -->
+	<update id="updateBoard" parameterType="com.board.vo.BoardVo">
 		UPDATE board
 		   SET TITLE    =   #{title},
-		   	   CONTENT  =   #{content}
+		   	   CONTENT  =   #{content},
+			   up_date	=	now()
 		 WHERE id = #{id} 
 	</update>
 	
+	<!-- 게시판 삭제 -->
 	<delete id="delete" parameterType="int">
 		DELETE 
 		  FROM board
 		 WHERE id = #{id}
 	</delete>
+	
+	<!-- 자유 게시판 목록 -->
+	<select id="listFreeBoard" resultType="com.board.vo.BoardVo">
+		SELECT  id
+			   , TITLE
+			   , name
+			   , REGDATE
+		FROM board
+		WHERE DIVISION = 'free'
+	</select>
+	
+	<!--  자유 게시판 글 작성 -->
+	<insert id="freeBoardInsert">
+	INSERT INTO board (
+		name
+		, title
+		, content
+		, division
+		, regdate
+	)
+	VALUES 
+	(
+		#{name}
+		, #{title}
+		, #{content}
+		, 'free'
+		, now()
+	)		
+	</insert>
+	
+	<!-- 자바 게시판 목록 -->
+	<select id="listJavaBoard" resultType="com.board.vo.BoardVo">
+		SELECT  id
+			   , TITLE
+			   , name
+			   , REGDATE
+		FROM board
+		WHERE DIVISION = 'java'
+	</select>
+	
+	<!--  자바 게시판 글 작성 -->
+	<insert id="javaBoardInsert">
+	INSERT INTO board (
+		name
+		, title
+		, content
+		, division
+		, regdate
+	)
+	VALUES 
+	(
+		#{name}
+		, #{title}
+		, #{content}
+		, 'java'
+		, now()
+	)		
+	</insert>
+	
+	<!--sql 게시판 목록 -->
+	<select id="listSqlBoard" resultType="com.board.vo.BoardVo">
+		SELECT  id
+			   , TITLE
+			   , name
+			   , REGDATE
+		FROM board
+		WHERE DIVISION = 'sql'
+	</select>
+	
+	<!--  sql 게시판 글 작성 -->
+	<insert id="sqlBoardInsert">
+	INSERT INTO board (
+		name
+		, title
+		, content
+		, division
+		, regdate
+	)
+	VALUES 
+	(
+		#{name}
+		, #{title}
+		, #{content}
+		, 'sql'
+		, now()
+	)		
+	</insert>
+	
+	<!--reivew 게시판 목록 -->
+	<select id="listReviewBoard" resultType="com.board.vo.BoardVo">
+		SELECT  id
+			   , TITLE
+			   , name
+			   , REGDATE
+		FROM board
+		WHERE DIVISION = 'reviw'
+	</select>
+	
+	<!--  review 게시판 글 작성 -->
+	<insert id="reviewBoardInsert">
+	INSERT INTO board (
+		name
+		, title
+		, content
+		, division
+		, regdate
+	)
+	VALUES 
+	(
+		#{name}
+		, #{title}
+		, #{content}
+		, 'reviw'
+		, now()
+	)		
+	</insert>
+	
 </mapper>

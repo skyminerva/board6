@@ -8,7 +8,7 @@
 	</select>
 	
 	<!-- 게시판 글 작성 -->
-	<insert id="insert">
+	<insert id="insert" parameterType="com.board.vo.BoardVo">
 	INSERT INTO board
 	(name,
 	title,
@@ -66,7 +66,7 @@
 	</select>
 	
 	<!--  자유 게시판 글 작성 -->
-	<insert id="freeBoardInsert">
+	<insert id="freeBoardInsert" parameterType="com.board.vo.BoardVo">
 	INSERT INTO board (
 		name
 		, title
@@ -95,7 +95,7 @@
 	</select>
 	
 	<!--  자바 게시판 글 작성 -->
-	<insert id="javaBoardInsert">
+	<insert id="javaBoardInsert" parameterType="com.board.vo.BoardVo">
 	INSERT INTO board (
 		name
 		, title
@@ -124,7 +124,7 @@
 	</select>
 	
 	<!--  sql 게시판 글 작성 -->
-	<insert id="sqlBoardInsert">
+	<insert id="sqlBoardInsert" parameterType="com.board.vo.BoardVo">
 	INSERT INTO board (
 		name
 		, title
@@ -153,7 +153,7 @@
 	</select>
 	
 	<!--  review 게시판 글 작성 -->
-	<insert id="reviewBoardInsert">
+	<insert id="reviewBoardInsert" parameterType="com.board.vo.BoardVo">
 	INSERT INTO board (
 		name
 		, title
@@ -170,5 +170,30 @@
 		, now()
 	)		
 	</insert>
+	
+	<select id="boardCnt" resultType="int">
+	SELECT COUNT(*)
+	FROM board
+	</select>
+	
+	<select id="selectPage" parameterType="Map" resultType="com.board.vo.BoardVo">
+	SELECT
+			ID
+			, TITLE
+			, NAME
+			, DIVISION
+			, REGDATE
+			, SEL_CNT
+	FROM board
+	ORDER BY REGDATE DESC
+	LIMIT #{offset}, #{pageSize}
+	</select>
+	
+	<update id="selCntUp" parameterType="int">
+	UPDATE board
+		SET 
+			SEL_CNT = IFNULL((SEL_CNT)+1,1)
+	WHERE ID = #{id}
+	</update>
 	
 </mapper>

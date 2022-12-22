@@ -2,7 +2,9 @@ package com.board.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.board.service.BoardService;
 import com.board.vo.BoardVo;
+import com.board.vo.PageHandler;
 
 @Controller
 @RequestMapping("/board/*")
@@ -52,8 +55,9 @@ public class BoardController<httpHttpServletRequest> {
 	}
 	
 	// 게시판 전체 조회
+	// page와 pageSize는 integer 타입으로 설정, int 타입시 null 상태를 표시할 수 없다.화면 오류 발생
 	@RequestMapping(value = "/boardAll", method = RequestMethod.GET)
-	public String listAll(Model model, HttpServletRequest request) throws Exception{
+	public String listAll(Integer page, Integer pageSize, Model model, HttpServletRequest request) throws Exception{
 		logger.info("boardAll");
 		
 		// getSession
@@ -66,13 +70,35 @@ public class BoardController<httpHttpServletRequest> {
 //			// 세션이 없으면 로그인 화면을 보여준다. 세션이 타임아웃으로 끝나도 로그인 화면을 보여준다.
 //			return "redirect:/board/loginView";
 //		}
-			
-		// 서비스 처리
-		List<BoardVo> result =  boardService.selectBoardAll();
-		logger.info("==============result=============== : {} ", result);
+		// page가 null 일경우 page set
+		if(page == null) {
+			page = 1;
+		}
+		
+		// pagesize가 null일경우 pagesize set
+		if(pageSize == null) {
+			pageSize = 10;
+		}
+		
+		// 총 게시물 수를 가져와서 pagesize로 나누고 pagenumber를 구한다.
+		// 총 게시물 수 서비스 처리
+		int totalCnt = boardService.selectTotalCnt();
+		PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
+		
+		// 페이지를 나누기 위한 값을 map으로 put하고 서비스처리로 넘긴다.
+		// sql에서 parametertype을 map으로 설정
+		Map<String, Object> pageMap = new HashMap<String, Object>();
+		pageMap.put("offset", (page -1) * pageSize);
+		pageMap.put("pageSize", pageSize);
+		// 페이징 서비스 처리
+		List<BoardVo> result = boardService.selectPage(pageMap);
+		
+		// 서비스 처리 --- 이전의 전체 게시판 리스트를 가져올 때 사용
+//		List<BoardVo> result =  boardService.selectBoardAll();
+//		logger.info("==============result=============== : {} ", result);
 		// model 에 add
 		model.addAttribute("boardAll",result);
-	
+		model.addAttribute("pageHandler", pageHandler);
 		// 보여줄 jsp 화면
 		return "board/boardAll";
 		

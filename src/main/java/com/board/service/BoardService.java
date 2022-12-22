@@ -1,6 +1,7 @@
 package com.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class BoardService {
 	
 	// 게시물 조회
 	public BoardVo selectBoard(int id) throws Exception {
-
+				
 		return boardDAO.selectBoard(id);
 	}
 	
@@ -48,6 +49,23 @@ public class BoardService {
 		
 		boardDAO.delete(id);
 	}
-
+	// 게시판 페이지 
+	public List<BoardVo> selectPage(Map<String, Object> pageMap) {
+		// TODO Auto-generated method stub
+		
+		return boardDAO.selectPage(pageMap);
+	}
+	
+	// 총 게시물 수
+	public int selectTotalCnt() {
+		// TODO Auto-generated method stub
+		int result = boardDAO.selectToTalCnt();
+		return result;
+	}
+	
+	// 조회수 카운트 업
+//	public int selCntUp(int id) {
+//		return boardDAO.selCntUp(id);
+//	}
 
 }

@@ -78,6 +78,7 @@ td {
 				<th>게시판 분야</th>
 				<th>제목</th>
 				<th>등록일</th>
+				<th>조회수</th>
 			</tr>
 			</thead>
 			<!-- 게시글 리스트 -->
@@ -88,10 +89,17 @@ td {
 					<td width="10%">${boardAll.division}</td>
 					<td width="30%">${boardAll.title}</td>
 					<td width="15%"><fmt:formatDate pattern="yyyy-MM-dd" value="${boardAll.regdate}" /></td>
-
+					<td width="5%">${boardAll.sel_cnt }</td>
 				</tr>
 			</c:forEach>
 		</table>
+		<br> <!-- 게시판 페이징 처리 -->
+		<div>
+			<c:forEach var="i" begin = "${pageHandler.startPage}" end = "${pageHandler.endPage}">
+			<!-- 숫자를 눌렀을 때 페이지 이동처리 forEach 반복문 써서 i는 페이지 번호  pagesize로 페이지 처리-->
+				<a href = "/board/boardAll?page=${i}&pageSize=${pageHandler.pageSize}">${i}</a>
+			</c:forEach>
+		</div>
 	</div>
 </body>
 </html>

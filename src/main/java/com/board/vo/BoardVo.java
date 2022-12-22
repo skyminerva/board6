@@ -11,6 +11,7 @@ public class BoardVo {
 	private String division;
 	private Date regdate;
 	private Date up_date;
+	private int sel_cnt;
 	
 	public int getId() {
 		return id;
@@ -54,10 +55,24 @@ public class BoardVo {
 	public void setUpdate(Date update) {
 		this.up_date = update;
 	}
+	
+	
+	public Date getUp_date() {
+		return up_date;
+	}
+	public void setUp_date(Date up_date) {
+		this.up_date = up_date;
+	}
+	public int getSel_cnt() {
+		return sel_cnt;
+	}
+	public void setSel_cnt(int sel_cnt) {
+		this.sel_cnt = sel_cnt;
+	}
 	@Override
 	public String toString() {
 		return "BoardVo [id=" + id + ", name=" + name + ", title=" + title + ", content=" + content + ", division="
-				+ division + ", regdate=" + regdate + ", up_date=" + up_date + "]";
+				+ division + ", regdate=" + regdate + ", up_date=" + up_date + ", sel_cnt=" + sel_cnt + "]";
 	}
 
 

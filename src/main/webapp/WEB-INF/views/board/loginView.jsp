@@ -8,7 +8,7 @@
 <title>Login view</title>
 </head>
 <body>
-   <form action="/board/loginView" method="post" onsubmit="return formCheck(this);">
+   <form action="/board/login" method="post" onsubmit="return formCheck(this);">
         <h3 id="title">Login</h3>
         <div id="msg">
 		</div>

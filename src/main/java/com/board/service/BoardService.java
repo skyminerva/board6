@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.board.dao.BoardDAO;
 import com.board.vo.BoardVo;
+import com.board.vo.Search;
 
 @Service
 public class BoardService {
@@ -16,6 +17,7 @@ public class BoardService {
 	@Autowired
 	private BoardDAO boardDAO;
 	
+
 	// select Now
 	public String selectNow() {
 		return boardDAO.selectNow();
@@ -67,5 +69,16 @@ public class BoardService {
 //	public int selCntUp(int id) {
 //		return boardDAO.selCntUp(id);
 //	}
-
+	
+	// 게시판 검색 후 페이지
+	public List<BoardVo> searchSelectPage(Search search) throws Exception{
+		
+		return boardDAO.searchSelectPage(search);
+	}
+	
+	// 게시판 검색 후 카운트
+	public int selectResultCnt(Search search) throws Exception {
+		
+		return boardDAO.selectResultCnt(search);
+	}
 }

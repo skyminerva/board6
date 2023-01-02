@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.board.vo.BoardVo;
+import com.board.vo.Search;
 
 @Repository
 public class BoardDAO {
@@ -74,4 +75,16 @@ public class BoardDAO {
 //		return sqlSession.update("boardMapper.selCntUp", id);
 //	}
 
+	// 게시판 페이지 검색
+	public List<BoardVo> searchSelectPage(Search search) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("boardMapper.searchSelectPage", search);
+	}
+	
+	// 검색 게시물 총 갯수
+	public int selectResultCnt(Search search) {
+		// TODO Auto-generated method stub
+		
+		return sqlSession.selectOne("boardMapper.selectResultCnt", search);
+	}
 }

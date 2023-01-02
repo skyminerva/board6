@@ -93,11 +93,19 @@ td {
 				</tr>
 			</c:forEach>
 		</table>
+		 <select class="search-option" name="option">
+          <option value="A" ${pageHandler.search.option=='A' || pageHandler.search.option=='' ? "selected" : ""}>제목+내용</option>
+          <option value="T" ${pageHandler.search.option=='T' ? "selected" : ""}>제목만</option>
+          <option value="W" ${pageHandler.search.option=='W' ? "selected" : ""}>작성자</option>
+        </select>
+
+        <input type="text" name="keyword" class="search-input" type="text" value="${pageHandler.search.keyword}" placeholder="검색어를 입력해주세요">
+        <input type="submit" class="search-button" value="검색">
 		<br> <!-- 게시판 페이징 처리 -->
 		<div>
 			<c:forEach var="i" begin = "${pageHandler.startPage}" end = "${pageHandler.endPage}">
 			<!-- 숫자를 눌렀을 때 페이지 이동처리 forEach 반복문 써서 i는 페이지 번호  pagesize로 페이지 처리-->
-				<a href = "/board/boardAll?page=${i}&pageSize=${pageHandler.pageSize}">${i}</a>
+				<a href = "/board/boardAll?page=${i}&pageSize=${pageHandler.search.pageSize}">${i}</a>
 			</c:forEach>
 		</div>
 	</div>

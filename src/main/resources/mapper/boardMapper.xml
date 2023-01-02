@@ -195,5 +195,50 @@
 			SEL_CNT = IFNULL((SEL_CNT)+1,1)
 	WHERE ID = #{id}
 	</update>
+
+ 	<select id="searchSelectPage" parameterType="com.board.vo.Search" resultType="com.board.vo.BoardVo">
+		SELECT 
+			id
+			, title
+			, content
+			, name
+			, sel_cnt
+			, regdate
+		FROM  BOARD	
+		WHERE true
+		<choose>
+			<when test='option=="T"'>s
+				AND title LIKE CONCAT('%', #{keyword}, '%')
+			</when>
+			<when test='option=="W"'>
+				AND name LIKE CONCAT('%', #{keyword}, '%')
+			</when>
+			<otherwise>
+				AND (title  LIKE CONCAT('%', #{keyword}, '%')
+				OR content LIKE CONCAT('%', #{keyword}, '%'))
+			</otherwise>
+		</choose>
+		LIMIT #{offset}, #{pageSize}
+	</select>
+		
+		
+	<select id="selectResultCnt" parameterType="com.board.vo.Search" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM  BOARD	
+		WHERE true
+		<choose>
+			<when test='option=="T"'>
+				AND TITLE LIKE CONCAT('%', #{keyword}, '%')
+			</when>
+			<when test='option=="W"'>
+				AND name LIKE CONCAT('%', #{keyword}, '%')
+			</when>
+			<otherwise>
+				AND (TITLE   LIKE CONCAT('%', #{keyword}, '%')
+				OR   CONTENT LIKE CONCAT('%', #{keyword}, '%'))
+			</otherwise>
+		</choose>
+	</select>
 	
 </mapper>

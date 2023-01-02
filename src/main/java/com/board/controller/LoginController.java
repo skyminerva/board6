@@ -31,7 +31,7 @@ public class LoginController {
 	}
 	
 	// HttpServletRequest는 interceptor에 있으므로  HttpSession을 사용해서 set만 해주면 된다.
-	@RequestMapping(value = "/board/loginView", method = RequestMethod.POST)
+	@RequestMapping(value = "/board/login", method = RequestMethod.POST)
 	public String login(String id, String pwd, boolean keepLogin ,boolean autoLogin ,HttpSession session, HttpServletResponse response) {
 //	public String login(String id, String pwd, HttpServletRequest request) {
 //		

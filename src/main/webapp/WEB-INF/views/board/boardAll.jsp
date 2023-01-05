@@ -93,7 +93,9 @@ td {
 				</tr>
 			</c:forEach>
 		</table>
-		 <select class="search-option" name="option">
+		<div class="search-container">
+      <form action="<c:url value="/board/boardAll"/>" class="search-form" method="get">
+        <select class="search-option" name="option">
           <option value="A" ${pageHandler.search.option=='A' || pageHandler.search.option=='' ? "selected" : ""}>제목+내용</option>
           <option value="T" ${pageHandler.search.option=='T' ? "selected" : ""}>제목만</option>
           <option value="W" ${pageHandler.search.option=='W' ? "selected" : ""}>작성자</option>
@@ -101,6 +103,8 @@ td {
 
         <input type="text" name="keyword" class="search-input" type="text" value="${pageHandler.search.keyword}" placeholder="검색어를 입력해주세요">
         <input type="submit" class="search-button" value="검색">
+      </form>
+    </div>
 		<br> <!-- 게시판 페이징 처리 -->
 		<div>
 			<c:forEach var="i" begin = "${pageHandler.startPage}" end = "${pageHandler.endPage}">

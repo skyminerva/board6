@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     	   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="commentMapper">
+<!--  namespce 제대로 좀 확인하자!!!!  -->
+
+<!-- 0.db 1.mapper  2. vo  3. dao  4.service 5. controller 6.view   -->
+<!-- 댓글을 만들려면??  insert, select(댓글 카운트) ,select(단건 조회), delete(댓글 단건 삭제), 
+	delete(작성자 댓글 조건으로 전부 삭제???) select(작성자 조건으로 다건 조회???) -->
+
+
+	<!-- 댓글 생성 -->
+	<!-- parameterType 적을 때 좀 복사하자!!!!!! -->
+	<insert id="insertCmt" parameterType="com.board.vo.CommentVo"> 
+		INSERT INTO COMMENT 
+		(
+		ID
+		, COMMENT
+		, COMMENTER
+		, REG_DATE
+		, UP_DATE
+		)
+		VALUES
+		(
+		#{id}
+		, #{comment}
+		, #{commenter}
+		, now()
+		, now()
+		)
+	</insert>
+	<!-- 댓글 단건 조회 -->
+	<select id="selectCmt" parameterType="int" resultType="com.board.vo.CommentVo">
+	SELECT 
+		CMT_NO
+		, ID
+		, COMMENT
+		, COMMENTER
+		, REG_DATE
+		, UP_DATE
+		FROM COMMENT
+	WHERE CMT_NO = #{cmtNO}
+    </select>
+	
+	<!--게시물의  댓글 수 -->
+	<select id="selectCmtCnt" parameterType="int" resultType="int">
+	SELECT COUNT(*) 
+		FROM COMMENT
+	WHERE ID = #{id}
+	</select>
+
+	<!-- 작성된 댓글 삭제  -->
+	<delete id="deleteCmt" parameterType="map">
+	DELETE 
+		FROM COMMENT 
+	WHERE CMT_NO = #{cmtNo} AND COMMNETER = #{commenter}
+	</delete>
+	
+	<!-- 게시물의 댓글 전부 삭제 -->
+	<delete id="deleteCmtAll" parameterType="int">
+	DELETE 
+		FROM COMMENT
+	WHERE ID = #{id}
+	</delete>
+
+	
+</mapper>

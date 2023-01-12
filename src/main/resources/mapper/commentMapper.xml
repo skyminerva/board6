@@ -19,7 +19,6 @@
 		, COMMENT
 		, COMMENTER
 		, REG_DATE
-		, UP_DATE
 		)
 		VALUES
 		(
@@ -27,21 +26,44 @@
 		, #{comment}
 		, #{commenter}
 		, now()
-		, now()
 		)
 	</insert>
-	<!-- 댓글 단건 조회 -->
-	<select id="selectCmt" parameterType="int" resultType="com.board.vo.CommentVo">
+	
+	<!-- 댓글 조회 -->
+	<select id="listCmt" parameterType="int" resultType="com.board.vo.CommentVo">
 	SELECT 
 		CMT_NO
-		, ID
 		, COMMENT
 		, COMMENTER
 		, REG_DATE
-		, UP_DATE
-		FROM COMMENT
-	WHERE CMT_NO = #{cmtNO}
-    </select>
+	FROM 
+		COMMENT
+	WHERE 1 = 1
+		AND ID = #{id}
+	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateCmt" parameterType="int">
+	UPDATE COMMENT
+		SET
+			COMMENT = #{comment}
+	WHERE 1 = 1
+		AND CMT_NO = #{cmtNo}
+	</update>
+	
+	<!-- 선택된 댓글 조회 -->
+	<select id="selectCmt" resultType="com.board.vo.CommentVo">
+		SELECT
+			ID
+			, CMT_NO
+			, COMMENT
+			, COMMENTER
+			, REG_DATE
+		FROM 
+			COMMENT
+		WHERE 1= 1 
+			AND CMT_NO = #{cmtNo}
+	</select>
 	
 	<!--게시물의  댓글 수 -->
 	<select id="selectCmtCnt" parameterType="int" resultType="int">
@@ -49,12 +71,12 @@
 		FROM COMMENT
 	WHERE ID = #{id}
 	</select>
-
+	
 	<!-- 작성된 댓글 삭제  -->
 	<delete id="deleteCmt" parameterType="map">
 	DELETE 
 		FROM COMMENT 
-	WHERE CMT_NO = #{cmtNo} AND COMMNETER = #{commenter}
+	WHERE CMT_NO = #{cmtNo} 
 	</delete>
 	
 	<!-- 게시물의 댓글 전부 삭제 -->

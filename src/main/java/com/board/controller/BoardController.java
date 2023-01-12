@@ -16,9 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.service.BoardService;
+import com.board.service.CommentService;
 import com.board.vo.BoardVo;
+import com.board.vo.CommentVo;
 import com.board.vo.PageHandler;
 import com.board.vo.Search;
 
@@ -30,6 +33,9 @@ public class BoardController<httpHttpServletRequest> {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	// home 화면
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -101,6 +107,7 @@ public class BoardController<httpHttpServletRequest> {
 		model.addAttribute("boardAll",result);
 		model.addAttribute("pageHandler", pageHandler);
 		// 보여줄 jsp 화면
+		
 		return "board/boardAll";
 		
 	}
@@ -131,6 +138,12 @@ public class BoardController<httpHttpServletRequest> {
 		// model 에 add
 		model.addAttribute("select", result);
 		// 보여줄 jsp 화면
+		
+		// 댓글 조회 서비스 처리 boardVo에서 id를 가져온다. board 테이블의 id와 연결된 댓글을 조회 처리
+		List<CommentVo> commentList = commentService.listCmt(boardVo.getId());
+		// model에 commnetList(댓글 리스트) 를 add
+		model.addAttribute("commentList", commentList);
+		
 		return "board/select";
 	}
 
@@ -190,5 +203,38 @@ public class BoardController<httpHttpServletRequest> {
 		boardService.delete(boardVo.getId());
 		// 삭제 확인
 		return "redirect:/board/boardAll";
+	}
+	
+	//댓글 작성
+	@RequestMapping(value="/commentWrite", method = RequestMethod.POST)
+	public String replyWrite(CommentVo commentVo, Search search, RedirectAttributes redirect) throws Exception {
+			
+		commentService.insertCmt(commentVo);
+		// redirectAttributes를 이용해서 작성한 게시물의 id를 가져와서 댓글 작성 후 게시글을 다시 셀렉트	
+		// redirect로 반환할 수 있는 것들을 생각해보자  --- search 의 정보들을 반환하면 조회 화면에서 추가 정보를 표시할 수 있지 않을까??
+		redirect.addAttribute("id", commentVo.getId());
+		
+		return "redirect:/board/select";
+	}
+	
+	//댓글 수정 
+	@RequestMapping(value="/commentUpdateView", method = RequestMethod.GET)
+	public String replyUpdateView(CommentVo commentVo, Model model) throws Exception {
+		logger.info("reply Write");
+		
+		model.addAttribute("commentUpdate", commentService.selectCmt(commentVo.getCmtNo()));
+		
+		return "board/commentUpdateView";
+	}
+	
+	// 댓글 수정
+	@RequestMapping(value="/commentUpdate", method = RequestMethod.POST)
+	public String replyUpdate(CommentVo commentVo, RedirectAttributes redirect) throws Exception {
+		
+		commentService.updateCmt(commentVo);
+		
+		redirect.addAttribute("id", commentVo.getId());
+		
+		return "redirect:/board/select";
 	}
 }

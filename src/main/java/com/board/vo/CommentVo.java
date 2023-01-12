@@ -7,6 +7,7 @@ public class CommentVo {
 	// db 칼럼 내용
 	private int cmtNo;
 	
+	// id는 board 테이블의 id 를 foreign 키로 연결
 	private int id;
 	
 	private String comment;

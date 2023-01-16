@@ -5,6 +5,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	 	<title>회원가입</title>
 	</head>
 	<body>
@@ -56,7 +59,12 @@
 							</tr>
 							<tr>
 								<td>
-									<label for="mobile">휴대폰     </label><input type="text" id="mobile" name="mobile" />
+									<label for="address_detail">상세주소    </label>	<input type="text" name="address_detail" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="mobile">휴대폰      </label><input type="text" id="mobile" name="mobile" />
 								</td>
 							</tr>
 							
@@ -73,4 +81,18 @@
 			<hr />
 		</div>
 	</body>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+		window.onload = function(){
+			document.getElementById("address").addEventListener("click", function(){ //주소입력칸을 클릭하면
+				//카카오 지도 발생
+				new daum.Postcode({
+					oncomplete: function(data) { //선택시 입력값 세팅
+						document.getElementById("address").value = data.address; // 주소 넣기
+						document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+					}
+				}).open();
+			});
+		}
+</script>
 </html>

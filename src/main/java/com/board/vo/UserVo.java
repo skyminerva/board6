@@ -10,7 +10,7 @@ public class UserVo {
 	private String email;
 	private String birth;
 	private String address;
-	private String address_detail;
+	private String addressdetail;
 	private String mobile;
 	private Date reg_date;
 	
@@ -64,16 +64,16 @@ public class UserVo {
 	}
 	
 	
-	public String getAddress_detail() {
-		return address_detail;
+	public String getAddressdetail() {
+		return addressdetail;
 	}
-	public void setAddress_detail(String address_detail) {
-		this.address_detail = address_detail;
+	public void setAddressdetail(String addressdetail) {
+		this.addressdetail = addressdetail;
 	}
 	@Override
 	public String toString() {
 		return "UserVo [id=" + id + ", pwd=" + pwd + ", name=" + name + ", email=" + email + ", birth=" + birth
-				+ ", address=" + address + ", address_detail=" + address_detail + ", mobile=" + mobile + ", reg_date="
+				+ ", address=" + address + ", addressdetail=" + addressdetail + ", mobile=" + mobile + ", reg_date="
 				+ reg_date + "]";
 	}
 

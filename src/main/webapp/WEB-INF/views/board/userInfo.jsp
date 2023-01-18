@@ -18,6 +18,7 @@
 	<h1>email=${userVo.email}</h1>
 	<h1>birth=${userVo.birth}</h1>
 	<h1>address=${userVo.address}</h1>
+	<h1>addressdetail=${userVo.addressdetail}</h1>
 	<h1>mobile=${userVo.mobile}</h1>
 	</body>
 <div id="menu" style="text-align:left;">

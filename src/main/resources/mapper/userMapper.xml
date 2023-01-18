@@ -12,7 +12,7 @@
 	email,
 	birth,
 	address,
-	address_detail,
+	addressdetail,
 	mobile,
 	reg_date)
 	VALUES
@@ -22,7 +22,7 @@
 	  #{email},
 	  #{birth},
 	  #{address},
-	  #{address_detail}
+	  #{addressdetail},
 	  #{mobile},
 	  now());
 	</insert>

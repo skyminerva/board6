@@ -1,5 +1,7 @@
 package com.board.controller;
 
+import java.security.NoSuchAlgorithmException;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.board.service.UserService;
+import com.board.util.BoardUtill;
 import com.board.vo.UserVo;
 
 @Controller
@@ -32,7 +35,7 @@ public class LoginController {
 	
 	// HttpServletRequest는 interceptor에 있으므로  HttpSession을 사용해서 set만 해주면 된다.
 	@RequestMapping(value = "/board/login", method = RequestMethod.POST)
-	public String login(String id, String pwd, boolean keepLogin ,boolean autoLogin ,HttpSession session, HttpServletResponse response) {
+	public String login(String id, String pwd, boolean keepLogin ,boolean autoLogin ,HttpSession session, HttpServletResponse response) throws NoSuchAlgorithmException {
 //	public String login(String id, String pwd, HttpServletRequest request) {
 //		
 //		if (loginCheck(id, pwd) == false) {
@@ -43,7 +46,7 @@ public class LoginController {
 		// logincheck를 안하니 여기에서 서비스처리 id로 유저셀렉(로그인)
 		UserVo user = userService.userSelect(id);
         logger.debug("**************user****************** : {}", user);
-		
+        pwd = BoardUtill.generate(pwd);
 		// user 객체가 null이 아니면 select된 id가 존재하므로 로그인 성공 >> pwd equals 확인 후 로그인 처리
 		if (user != null && user.getPwd().equals(pwd)) {
 			

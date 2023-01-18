@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.board.service.UserService;
+import com.board.util.BoardUtill;
 import com.board.vo.UserVo;
 
 @Controller
@@ -33,12 +34,6 @@ public class UserController {
 	public String userAdd(UserVo userVo, Model model) throws Exception{
 		logger.info("userAdd");
 		
-		String pwd = userVo.getPwd();
-		MessageDigest md = MessageDigest.getInstance(pwd);
-	    md.update(pwd.getBytes());
-	    byte[] digest = md.digest();
-	    String result = new BigInteger(1, digest).toString(16).toUpperCase();
-	    userVo.setPwd(result);
 		// 서비스 처리
 		userService.userAdd(userVo);
 		
@@ -47,12 +42,4 @@ public class UserController {
 		return "board/userInfo";
 	}
 	
-	// sha512 crypto
-	public String generate(String str) throws NoSuchAlgorithmException{
-	    MessageDigest md = MessageDigest.getInstance("SHA-512");
-	    md.update(str.getBytes());
-	    byte[] digest = md.digest();
-	    String result = new BigInteger(1, digest).toString(16).toUpperCase();
-	    return result;
-	}
 }

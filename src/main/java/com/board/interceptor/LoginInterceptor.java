@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.board.util.AesCrypto;
+
 // HandlerInterceptor와 HandlerInterceptorAdapter 사용법은 동일하다.
 // HandlerInterceptor는 implements로 HandlerInterceptorAdapter은 extends 해주면 된다.
 public class LoginInterceptor extends HandlerInterceptorAdapter{
@@ -37,10 +39,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		        for (Cookie cookies : cookie) {
 		        	 // 쿠키 이름 가져오기
 		            String name = cookies.getName();
+		            
 		            // 쿠키 값 가져오기
 		            String value = cookies.getValue(); 
 
 		            if (name.equals("id")) {
+		            	
 		                return true;
 		            } else {
 		    			// interceptor에서는 redirect가 아닌 sendRedirect 사용한다.

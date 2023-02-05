@@ -22,5 +22,18 @@ public class UserDAO {
 		
 		return sqlSession.selectOne("userMapper.userSelect", id);
 	}
-
+	
+	// password modify
+	public int updatePwd(UserVo userVo) {
+		return sqlSession.update("userMapper.updatePwd", userVo);
+		
+	}
+	
+	// 회원 조회 카운트
+	public int selectUserCnt(String id) throws Exception{
+		
+		int result = sqlSession.selectOne("userMapper.selectUserCnt", id);
+		
+		return result;
+	}
 }

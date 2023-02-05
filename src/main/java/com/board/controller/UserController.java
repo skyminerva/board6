@@ -1,8 +1,6 @@
 package com.board.controller;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.board.service.UserService;
-import com.board.util.BoardUtill;
 import com.board.vo.UserVo;
+import com.mysql.cj.Session;
 
 @Controller
 public class UserController {
@@ -40,6 +38,25 @@ public class UserController {
 		model.addAttribute("userInfo", userVo);
 		// userInfo 화면에서 회원가입 정보 띄우기
 		return "board/userInfo";
+	}
+	
+	// password modify
+	@RequestMapping(value = "/board/updatePwd", method = RequestMethod.GET)
+	public void updatePwd() throws Exception {
+	
+	}
+	
+	// password modify
+	@RequestMapping(value = "/board/updatePwd", method = RequestMethod.POST)
+	public String updatePwd(UserVo userVo, String newPwd, HttpSession session) throws Exception {
+		
+		int result = userService.updatePwd(userVo, newPwd);
+		if(result == 1) {
+			session.invalidate();
+			return "board/loginView";
+		} else {
+			return "board/updatePwd";
+		}
 	}
 	
 }

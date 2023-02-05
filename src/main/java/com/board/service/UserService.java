@@ -1,7 +1,5 @@
 package com.board.service;
 
-import java.security.NoSuchAlgorithmException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +29,7 @@ public class UserService {
 //	    userVo.setPwd(result);
 		
 		// aes 로 username 양방향 암호화 
-		AesCrypto crypto = new AesCrypto();
-		String userName = userVo.getName();
-		String aesName = crypto.encrypt(userName);
+		String aesName = AesCrypto.encrypt(userVo.getName());
 		userVo.setName(aesName);
 		
 		// sha512로 패스워드 암호화 (단방향)
@@ -48,7 +44,29 @@ public class UserService {
 		
 		UserVo result = userDAO.userSelect(id);
 		
-		// dao 처리
 		return result;
+	}
+	
+	// 패스워드 변경
+	public int updatePwd(UserVo userVo, String param) throws Exception {
+		
+		// user 정보 조회
+		UserVo user = userDAO.userSelect(userVo.getId());
+        
+        // sha512 암호화 패스워드 비교 (단방향) -- 단방향은 복호화로 비교하는 것이 아니라 암호화 자제로 비교 
+		// 화면에 입력된 현재 password
+        String pwd = BoardUtill.generate(userVo.getPwd());
+		// 화면에서 입력된 new password
+		String newPwd = BoardUtill.generate(param);
+		int result = 0;
+		// user 객체가 null이 아니면 select된 id가 존재하므로 로그인 성공 >> pwd equals 확인 후 로그인 처리
+		if (user != null && user.getPwd().equals(pwd)) {
+			userVo.setPwd(newPwd);
+			// dao 로 전달
+			result = userDAO.updatePwd(userVo);
+		}
+		
+		return result;
+		
 	}
 }

@@ -27,9 +27,32 @@
 	  now());
 	</insert>
 
+	<!-- 회원 정보 조회 -->
 	<select id="userSelect" parameterType="string" resultType="com.board.vo.UserVo">
 	SELECT	*
 	FROM userinfo
 	WHERE id = #{id}	
 	</select>
+	
+	<!-- 패스워드 변경 -->
+	<update id="updatePwd" parameterType="string">
+	UPDATE USERINFO
+		SET
+			PWD 		= #{pwd}
+			,UP_DATE = CURRENT_TIMESTAMP
+	WHERE 1 = 1
+		AND ID 		= #{id};
+	
+	</update>
+	
+	<!-- 회원 조회 카운트  -->
+	<select id="selectUserCnt" parameterType="String" resultType="Int">
+	SELECT 
+		COUNT(*)
+	FROM 
+		USERINFO
+	WHERE 1 = 1
+		AND ID = #{id}	
+	</select>
+
 </mapper>

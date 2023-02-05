@@ -11,6 +11,9 @@
    <form action="/board/login" method="post" onsubmit="return formCheck(this);">
         <h3 id="title">Login</h3>
         <div id="msg">
+          <c:if test="${not empty param.msg}">
+		 ${URLDecoder.decode(param.msg)}     
+	    </c:if>  
 		</div>
 		<table>
 			<tr>
@@ -51,7 +54,7 @@
             }
      		<!-- 폼체크해서 if 문에 id, pwd에 따라서 메세지 선택 -->
             function setMessage(msg, element){
-                 document.getElementById("msg").innerHTML = ` ${'${msg}'}`;
+                 document.getElementById("msg").innerHTML = `${'${msg}'}`;
      
                  if(element) {
                      element.select();

@@ -1,8 +1,10 @@
 package com.board.controller;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.service.BoardService;
 import com.board.service.CommentService;
+import com.board.service.UserService;
+import com.board.util.BoardUtill;
 import com.board.vo.BoardVo;
 import com.board.vo.CommentVo;
 import com.board.vo.PageHandler;
@@ -47,8 +51,12 @@ public class BoardController<httpHttpServletRequest> {
 		
 		// instance 생성
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
+		
+		DateFormat format4 = DateFormat.getDateInstance(DateFormat.SHORT);
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 		// formattedDate 에 dateFormat 형태로 저장.
-		String formattedDate = dateFormat.format(dt);
+		String formattedDate = format.format(dt);
+		
 		// model 에 serverTime (key=string) formattedDate (value = object) 확장해서 생각.
 		model.addAttribute("serverTime", formattedDate );
 		
@@ -67,10 +75,10 @@ public class BoardController<httpHttpServletRequest> {
 	public String listAll(Search search, Model model, HttpServletRequest request) throws Exception{
 		logger.info("boardAll");
 		
-		// getSession
-		HttpSession session = request.getSession();
-		// user 객체 get
-		session.getAttribute("user");
+//		// getSession
+//		HttpSession session = request.getSession();
+//		// user 객체 get
+//		session.getAttribute("user");
 		// 로그인체크 세션 정보 유무에 따라서
 //		if(loginCheck(request) == false) {
 //		
@@ -103,10 +111,11 @@ public class BoardController<httpHttpServletRequest> {
 		// 서비스 처리 --- 이전의 전체 게시판 리스트를 가져올 때 사용
 //		List<BoardVo> result =  boardService.selectBoardAll();
 //		logger.info("==============result=============== : {} ", result);
+		
 		// model 에 add
 		model.addAttribute("boardAll",result);
 		model.addAttribute("pageHandler", pageHandler);
-		// 보여줄 jsp 화면
+		
 		
 		return "board/boardAll";
 		
@@ -148,7 +157,7 @@ public class BoardController<httpHttpServletRequest> {
 	}
 
 	// 게시판 글 작성 화면
-	@RequestMapping(value = "/board/insertView", method = RequestMethod.GET)
+	@RequestMapping(value = "/board/insert", method = RequestMethod.GET)
 	public void insertView() throws Exception{
 		// get만 만들거나 post만 만들어서 실패.
 		// get에서 사용하는 것이 아니라 post로 만들어서 사용. 

@@ -13,6 +13,7 @@ public class UserVo {
 	private String addressdetail;
 	private String mobile;
 	private Date reg_date;
+	private Date up_date;
 	
 	public String getId() {
 		return id;
@@ -63,7 +64,12 @@ public class UserVo {
 		this.reg_date = reg_date;
 	}
 	
-	
+	public Date getUp_date() {
+		return up_date;
+	}
+	public void setUp_date(Date up_date) {
+		this.up_date = up_date;
+	}
 	public String getAddressdetail() {
 		return addressdetail;
 	}

@@ -53,14 +53,17 @@ td {
 			<button onclick="location.href='/board/userAdd'">회원 가입</button>
 			<button onclick="location.href='/board/loginView'">로그인</button>
 			<button onclick="location.href='/board/insert'">게시판 등록</button>
+			<button onclick="location.href='/board/updatePwd'">비밀번호변경</button>
 			<!-- 세션에 user 객체가 있으므로 null이 아니므로 로그아웃 버튼과 id name 나오는 것 확인 -->
 			<!-- 쿠키로 자동로그인 시에는 세션스코프를 이용한 유저 객체는 가지고 오지 못한다. -->
 			<c:if test="${sessionScope.user.id != null}">
 				<button onclick="location.href='/board/logout'">로그아웃</button>${sessionScope.user.id} ${sessionScope.user.name}
 				<h2>${cookie.id.name}</h2>
 				<h2>${cookie.id.value}</h2>
-				<input type="text" name="id" id ="id" value= "${sessionScope.user.id}">
-				<input type="text" name="name" id ="name" value= "${sessionScope.user.name}">
+				<td width="15%"><fmt:formatDate pattern="yyyy-MM-dd" value="${sessionScope.user.up_date}" />비밀번호변경일</td>
+				<td width="15%"> ${sessionScope.user.up_date} 다음 비밀번호변경일입니다</td>
+ 				<input type="text" name="id" id ="id" value= "${sessionScope.user.name}">
+				<input type="text" name="name" id ="name" value= "${sessionScope.user.pwd}"> 
 			</c:if>
 		</div>
 		<table align="center">

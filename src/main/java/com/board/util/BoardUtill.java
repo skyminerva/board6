@@ -3,7 +3,10 @@ package com.board.util;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -50,4 +53,21 @@ public class BoardUtill {
         byte[] decrypted = cipher.doFinal(decodedBytes);
         return new String(decrypted, "UTF-8");
     }
+    
+	public static String AddDate(String strDate, int year, int month, int day) throws Exception {
+		
+        SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd");
+        
+		Calendar cal = Calendar.getInstance();
+        
+		Date dt = dtFormat.parse(strDate);
+        
+		cal.setTime(dt);
+        
+		cal.add(Calendar.YEAR,  year);
+		cal.add(Calendar.MONTH, month);
+		cal.add(Calendar.DATE,  day);
+        
+		return dtFormat.format(cal.getTime());
+	}
 }

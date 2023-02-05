@@ -200,6 +200,7 @@
 		SELECT 
 			id
 			, title
+			, division
 			, content
 			, name
 			, sel_cnt

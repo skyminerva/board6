@@ -1,6 +1,10 @@
 package com.board.controller;
 
+import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.service.UserService;
 import com.board.util.AesCrypto;
@@ -35,6 +40,7 @@ public class LoginController {
 	}
 	
 	// HttpServletRequest는 interceptor에 있으므로  HttpSession을 사용해서 set만 해주면 된다.
+	// 로그인 화면
 	@RequestMapping(value = "/board/login", method = RequestMethod.POST)
 	public String login(String id, String pwd, boolean keepLogin ,boolean autoLogin ,HttpSession session, HttpServletResponse response) throws Exception {
 //	public String login(String id, String pwd, HttpServletRequest request) {
@@ -47,9 +53,23 @@ public class LoginController {
 		// logincheck를 안하니 여기에서 서비스처리 id로 유저셀렉(로그인)
 		UserVo user = userService.userSelect(id);
         logger.debug("**************user****************** : {}", user);
+        Date update = user.getUp_date();
         
+        Calendar cal = Calendar.getInstance();
+        
+        cal.setTime(update);
+        cal.add(Calendar.DATE, 10);
+        Date newUpdate = cal.getTime();
+        user.setUp_date(newUpdate);
+      
         // sha512 암호화 패스워드 비교 (단방향) -- 단방향은 복호화로 비교하는 것이 아니라 암호화 자제로 비교 
         pwd = BoardUtill.generate(pwd);
+        
+		// 복호화
+		String userName = AesCrypto.decrypt(user.getName());
+		user.setName(userName);
+		
+
         
 		// user 객체가 null이 아니면 select된 id가 존재하므로 로그인 성공 >> pwd equals 확인 후 로그인 처리
 		if (user != null && user.getPwd().equals(pwd)) {
@@ -57,9 +77,6 @@ public class LoginController {
 			// 패스워드와 같이 비교하는 값이 아니라 로그인 성공했을 시에만 user.getName()을 복호화 해준다. 
 			// 복호화를 어디서 해야하는 지 잘 생각했어야 했다.
 			// 무지성으로 조회하는 곳에 다 넣어줘야 한다는 생각하지 말자.
-			AesCrypto crypto = new AesCrypto();
-			String userName = crypto.decrypt(user.getName());
-			user.setName(userName);
 			
 			// setAttribute의 "user"는 interceptor의 getAttribute와 맞춰주어야 한다.
 			session.setAttribute("user", user);
@@ -71,7 +88,7 @@ public class LoginController {
 				// cookie 생성
 				Cookie cookie = new Cookie("id", null);
 				// 쿠키 종료 시간 설정
-				cookie.setMaxAge(0);
+				cookie.setMaxAge(20*60);
 				// 쿠키 추가
 				response.addCookie(cookie);
 			
@@ -148,7 +165,9 @@ public class LoginController {
 		
 		// 서비스 처리(user 객체가 null이면 select id가 없으므로 로그인 실패임)
 		} else {
-			return "board/loginView";
+			// 로그인 실패시 
+			String msg = URLEncoder.encode("로그인 실패! 아이디와 비밀번호 확인해주세요", "utf-8");
+			return "redirect:/board/loginView?msg=" + msg;
 		}
 		
 		
